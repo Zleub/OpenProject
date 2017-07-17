@@ -1,0 +1,19 @@
+#!/usr/bin/env sh
+
+# @Author: Debray Arnaud <adebray>
+# @Date:   2017-07-17T17:46:25+02:00
+# @Email:  adebray@student.42.fr
+# @Last modified by:   adebray
+# @Last modified time: 2017-07-17T18:04:53+02:00
+
+echo 'Hello '`uname -m`_`uname -s`' !'
+
+
+if [ `uname -s` = 'Darwin' ]; then
+	echo 'Building for OSX'
+	hash brew || (echo 'brew not found, aborting configure'; exit 0)
+	echo 'brew OK'
+	hash pandoc || (echo 'pandoc not found, installing ...'; brew install pandoc || exit 0)
+	echo 'pandoc OK'
+fi
+# hash ls
