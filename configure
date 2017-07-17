@@ -4,7 +4,7 @@
 # @Date:   2017-07-17T17:46:25+02:00
 # @Email:  adebray@student.42.fr
 # @Last modified by:   adebray
-# @Last modified time: 2017-07-17T18:04:53+02:00
+# @Last modified time: 2017-07-17T18:18:16+02:00
 
 echo 'Hello '`uname -m`_`uname -s`' !'
 
@@ -15,5 +15,7 @@ if [ `uname -s` = 'Darwin' ]; then
 	echo 'brew OK'
 	hash pandoc || (echo 'pandoc not found, installing ...'; brew install pandoc || exit 0)
 	echo 'pandoc OK'
+	hash cmake || (echo 'cmake not found, installing ...'; brew install cmake || exit 0)
+	echo 'cmake OK'
 fi
 # hash ls
