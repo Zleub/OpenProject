@@ -1,0 +1,25 @@
+# @Author: Debray Arnaud <adebray>
+# @Date:   2017-07-19T23:00:53+02:00
+# @Email:  adebray@student.42.fr
+# @Last modified by:   adebray
+# @Last modified time: 2017-07-20T00:50:34+02:00
+
+# CMake
+
+CMakeCache.txt
+CMakeFiles
+CMakeScripts
+Testing
+Makefile
+cmake_install.cmake
+install_manifest.txt
+compile_commands.json
+CTestTestfile.cmake
+
+# Project
+
+src/glfw
+src/helloworld
+
+# C/C++
+*.a
