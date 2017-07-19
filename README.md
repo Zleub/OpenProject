@@ -7,6 +7,15 @@ OpenProject for [42](http://www.42.fr).
 
 It should be a basic voxel engine, with the particularity to be sensible to attractors and repulsors.
 
+## Setup
+
+### OSX / Linux
+
+```
+git clone --recursive https://github.com/Zleub/OpenProject.git
+./configure
+```
+
 ## Dependencies
 
 ### OSX
