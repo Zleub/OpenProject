@@ -22,3 +22,7 @@ git clone --recursive https://github.com/Zleub/OpenProject.git
 
 - brew (OSX package manager)
 - [glfw](https://github.com/glfw/glfw) (universal OpenGL wrapper)
+
+## Readings
+
+- [cmake](https://cmake.org/cmake/help/v3.0/manual/cmake-buildsystem.7.html)
