@@ -1,21 +1,20 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 # @Author: Debray Arnaud <adebray>
 # @Date:   2017-07-17T17:46:25+02:00
 # @Email:  adebray@student.42.fr
 # @Last modified by:   adebray
-# @Last modified time: 2017-07-17T18:18:16+02:00
+# @Last modified time: 2017-07-19T22:42:35+02:00
 
 echo 'Hello '`uname -m`_`uname -s`' !'
 
-
 if [ `uname -s` = 'Darwin' ]; then
-	echo 'Building for OSX'
-	hash brew || (echo 'brew not found, aborting configure'; exit 0)
-	echo 'brew OK'
-	hash pandoc || (echo 'pandoc not found, installing ...'; brew install pandoc || exit 0)
-	echo 'pandoc OK'
-	hash cmake || (echo 'cmake not found, installing ...'; brew install cmake || exit 0)
-	echo 'cmake OK'
+	echo -e 'Building for OSX'
+	hash brew || (echo -e 'brew not found, aborting configure'; exit 0)
+	echo -e '\033[32m √ \033[0m brew OK'
+	hash cmake || {
+		echo -e 'cmake not found, installing ...';
+		brew install cmake || echo -e '\033[31m √ \033[0m cmake KO' && exit 0
+	}
+	echo -e '\033[32m √ \033[0m cmake OK'
 fi
-# hash ls
