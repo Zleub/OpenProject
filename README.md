@@ -25,4 +25,4 @@ git clone --recursive https://github.com/Zleub/OpenProject.git
 
 ## Readings
 
-- [cmake](https://cmake.org/cmake/help/v3.0/manual/cmake-buildsystem.7.html)
+- [cmake](https://cmake.org/Wiki/CMake)
