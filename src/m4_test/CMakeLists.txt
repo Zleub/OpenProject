@@ -1,19 +1,22 @@
 function(preprocess out_var)
-  set(result)
-  foreach(in_f ${ARGN})
-	set(out_f "${CMAKE_CURRENT_BINARY_DIR}/${in_f}")
-	set(out "${CMAKE_CURRENT_BINARY_DIR}/${in_f}.cpp")
-    add_custom_command(
-      OUTPUT ${out}
-	  DEPENDS ${out_f}
-      COMMAND m4
-      ARGS ${out_f} > ${out}
-      VERBATIM
-    )
-    list(APPEND result ${out})
-  endforeach()
-  set(${out_var} "${result}" PARENT_SCOPE)
+	set(result)
+	foreach(in_f ${ARGN})
+		string(REGEX MATCH "^(.*)\\.[^.]*$" dummy ${in_f})
+		set(striped ${CMAKE_MATCH_1})
+
+		set(in "${CMAKE_CURRENT_BINARY_DIR}/${in_f}")
+		set(out "${CMAKE_CURRENT_BINARY_DIR}/${striped}")
+		add_custom_command(
+			OUTPUT ${out}
+			DEPENDS ${in}
+			COMMAND m4
+			ARGS ${in} > ${out}
+			VERBATIM
+		)
+		list(APPEND result ${out})
+	endforeach()
+	set(${out_var} "${result}" PARENT_SCOPE)
 endfunction()
 
-preprocess(prep_files test.m4)
+preprocess(prep_files test.cpp.m4)
 add_library(m4_test ${prep_files})
