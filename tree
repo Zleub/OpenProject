@@ -1,3 +1,9 @@
 #!/usr/bin/env bash
 
-tree -I "CMakeFiles|deps" 
+# @Author: Debray Arnaud <adebray>
+# @Date:   2017-07-19T23:59:15+02:00
+# @Email:  adebray@student.42.fr
+# @Last modified by:   adebray
+# @Last modified time: 2017-07-20T18:21:04+02:00
+
+tree -I "CMakeFiles|deps|glfw"
