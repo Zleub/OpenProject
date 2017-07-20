@@ -6,7 +6,7 @@
 //  sdddddddddddddddddddddddds   @Last modified by: adebray
 //  sdddddddddddddddddddddddds
 //  :ddddddddddhyyddddddddddd:   @Created: 2017-07-19T23:45:13+02:00
-//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-20T00:10:49+02:00
+//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-20T18:23:03+02:00
 //    +ddddddh`+dh +dddddddo
 //     -sdddddh///sdddddds-
 //       .+ydddddddddhs/.
@@ -15,10 +15,9 @@
 #include <stdio.h>
 #include <demo.h>
 
-int demo(void) {
-	return (0);
-}
-
+/*
+** Dump the OpenGL and GLFW versions
+*/
 void	gl_version(void)
 {
 	const unsigned char *renderer;
