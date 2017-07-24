@@ -6,34 +6,39 @@
 //  sdddddddddddddddddddddddds   @Last modified by: adebray
 //  sdddddddddddddddddddddddds
 //  :ddddddddddhyyddddddddddd:   @Created: 2017-07-20T00:11:14+02:00
-//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-20T18:18:20+02:00
+//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-24T22:45:57+02:00
 //    +ddddddh`+dh +dddddddo
 //     -sdddddh///sdddddds-
 //       .+ydddddddddhs/.
 //           .-::::-`
 
-#include <demo.h>
+#include <gl.h>
 
 int main() {
-	glfwInit();
+	adebray::gl _gl;
 
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	struct adebray::gl::window * w = _gl.createWindow(800, 600, "Default Window");
+	_gl.printVersion();
 
-	GLFWwindow * window = glfwCreateWindow(640, 480, "My Window", NULL, NULL);
-	glfwMakeContextCurrent(window);
+	w->setVertices(1000, [](size_t x){
+		return (t_vec3i){static_cast<int>(x / 10), static_cast<int>(x % 10), 0};
+	});
 
-	gl_version();
+	adebray::gl::shader * _v = new adebray::gl::shader(GL_VERTEX_SHADER, "src/vertex.glsl");
+	_gl.createProgram(_v);
 
-	while (!glfwWindowShouldClose(window))
-	{
-		glClear(GL_COLOR_BUFFER_BIT);
-		glfwSwapBuffers(window);
-		glfwPollEvents();
-	}
+	_gl.run( [](struct adebray::gl::window * window){
+		while (!glfwWindowShouldClose(window->win))
+		{
+			glClear(GL_COLOR_BUFFER_BIT);
+			glUseProgram(window->program);
+			glDrawArrays(GL_TRIANGLE_FAN, 0, window->verticesNbr);
 
-	glfwTerminate();
+			glfwSwapBuffers(window->win);
+			glfwPollEvents();
+		}
+		glfwTerminate();
+	});
+
 	return (0);
 }
