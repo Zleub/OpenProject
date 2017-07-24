@@ -6,6 +6,10 @@
 
 cmake_minimum_required(VERSION 3.8)
 
+set (CMAKE_CXX_STANDARD 11)
+set (GCC_COVERAGE_COMPILE_FLAGS "-Wall -Werror -Wextra")
+set (CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
+
 execute_process(
 	COMMAND ./configure
 )
@@ -18,11 +22,11 @@ set(GLFW_BUILD_TESTS OFF CACHE BOOL "" FORCE)
 set(GLFW_BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 add_subdirectory (deps/glfw ./src/glfw)
 
-add_subdirectory (src/demo)
+add_subdirectory (src/gl)
 
 add_executable (helloworld src/main.cpp)
 target_link_libraries (helloworld LINK_PUBLIC
-  demo
   ${OPENGL_gl_LIBRARY}
   glfw
+  gl
 )
