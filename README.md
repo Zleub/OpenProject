@@ -26,3 +26,4 @@ git clone --recursive https://github.com/Zleub/OpenProject.git
 ## Readings
 
 - [cmake](https://cmake.org/Wiki/CMake)
+- [Google C++ StyleGuide](https://google.github.io/styleguide/cppguide.html)
