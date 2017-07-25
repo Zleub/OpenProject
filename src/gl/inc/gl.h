@@ -6,7 +6,7 @@
 //  sdddddddddddddddddddddddds   @Last modified by: adebray
 //  sdddddddddddddddddddddddds
 //  :ddddddddddhyyddddddddddd:   @Created: 2017-07-24T20:56:35+02:00
-//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-24T22:45:12+02:00
+//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-25T02:08:33+02:00
 //    +ddddddh`+dh +dddddddo
 //     -sdddddh///sdddddds-
 //       .+ydddddddddhs/.
@@ -16,6 +16,7 @@
 #define GLFW_INCLUDE_GLEXT
 #include <GLFW/glfw3.h>
 
+#include <cstdlib>
 #include <vector>
 #include <string>
 #include <iostream>
@@ -51,10 +52,11 @@ namespace adebray {
 		};
 
 		struct window {
-			typedef t_vec3i(*glVerticesConfig)(size_t);
+			typedef t_vec3f(*glVerticesConfig)(size_t);
 
 			window(int, int, GLFWwindow *);
 			void setVertices(GLuint, glVerticesConfig);
+			std::string to_String(void);
 
 			int width;
 			int height;
@@ -64,7 +66,6 @@ namespace adebray {
 			GLuint VBO;
 
 			GLuint verticesNbr;
-			std::vector<t_vec3i> vertices;
 
 			GLuint vertex_shader;
 			GLuint fragment_shader;
@@ -81,7 +82,7 @@ namespace adebray {
 
 		struct window * createWindow(int w, int h, std::string title);
 		GLuint createProgram(void);
-		GLuint createProgram(shader *vertex);
+		GLuint createProgram(shader *vertex, shader *fragment);
 		void run(glRun);
 
 	private:

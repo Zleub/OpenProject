@@ -1,11 +1,10 @@
 #version 410
 
-in vec3 vPos;
-out vec3 color;
+layout(location = 0) in vec3 vPos;
+// out vec3 color;
 
 void main()
 {
-	color = vec3(1., 1., 1.);
-
+	// color = vec3(1., 0., 0.);
 	gl_Position = vec4(vPos, 1.);
 }

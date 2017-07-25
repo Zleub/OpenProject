@@ -4,7 +4,7 @@
 # @Date:   2017-07-17T17:46:25+02:00
 # @Email:  adebray@student.42.fr
 # @Last modified by:   adebray
-# @Last modified time: 2017-07-20T19:21:58+02:00
+# @Last modified time: 2017-07-24T23:09:49+02:00
 
 echo 'Hello '`uname -m`_`uname -s`' !'
 
@@ -14,12 +14,17 @@ if [ `uname -s` = 'Darwin' ]; then
 	echo -e '\033[32m √ \033[0m brew OK'
 	hash cmake || {
 		echo -e 'cmake not found, installing ...';
-		brew install cmake || echo -e '\033[31m √ \033[0m cmake KO' && exit 0
+		brew install cmake || echo -e '\033[31m √ \033[0m cmake KO'
 	}
 	echo -e '\033[32m √ \033[0m cmake OK'
 	hash m4 || {
 		echo -e 'm4 not found, installing ...';
-		brew install m4 || echo -e '\033[31m √ \033[0m m4 KO' && exit 0
+		brew install m4 || echo -e '\033[31m √ \033[0m m4 KO'
 	}
 	echo -e '\033[32m √ \033[0m m4 OK'
+	hash doxygen || {
+		echo -e 'doxygen not found, installing ...';
+		brew install doxygen || echo -e '\033[31m √ \033[0m doxygen KO'
+	}
+	echo -e '\033[32m √ \033[0m doxygen OK'
 fi

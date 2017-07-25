@@ -6,7 +6,7 @@
 //  sdddddddddddddddddddddddds   @Last modified by: adebray
 //  sdddddddddddddddddddddddds
 //  :ddddddddddhyyddddddddddd:   @Created: 2017-07-24T20:53:32+02:00
-//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-24T22:43:29+02:00
+//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-25T02:06:34+02:00
 //    +ddddddh`+dh +dddddddo
 //     -sdddddh///sdddddds-
 //       .+ydddddddddhs/.
@@ -65,26 +65,22 @@ namespace adebray {
 		current = _w;
 		glfwMakeContextCurrent(window);
 
-		glGenVertexArrays(1, &current->VAO);
-		glBindVertexArray(current->VAO);
-
 		windows.push_back(_w);
 		return _w;
 	}
 
 	GLuint gl::createProgram(void) {
 		current->program = glCreateProgram();
-		glAttachShader(current->program, current->vertex_shader);
-		// glAttachShader(current->program, current->fragment_shader);
 		glLinkProgram(current->program);
 		return current->program;
 	}
 
-	GLuint gl::createProgram(shader *vertex) {
+	GLuint gl::createProgram(shader *vertex, shader *fragment) {
 		current->program = glCreateProgram();
 		current->vertex_shader = vertex->id;
+		current->fragment_shader = fragment->id;
 		glAttachShader(current->program, vertex->id);
-		// glAttachShader(current->program, current->fragment_shader);
+		glAttachShader(current->program, fragment->id);
 		glLinkProgram(current->program);
 		return current->program;
 	}
