@@ -6,7 +6,7 @@
 //  sdddddddddddddddddddddddds   @Last modified by: adebray
 //  sdddddddddddddddddddddddds
 //  :ddddddddddhyyddddddddddd:   @Created: 2017-07-24T20:53:32+02:00
-//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-25T02:06:34+02:00
+//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-26T03:31:36+02:00
 //    +ddddddh`+dh +dddddddo
 //     -sdddddh///sdddddds-
 //       .+ydddddddddhs/.
@@ -86,7 +86,12 @@ namespace adebray {
 	}
 
 	void gl::run(glRun run) {
-		run( current );
+		unsigned int i = 0;
+		while (!glfwWindowShouldClose(current->win)) {
+			run( i, current );
+			i += 1;
+		}
+		glfwTerminate();
 	}
 
 }

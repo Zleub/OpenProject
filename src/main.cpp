@@ -6,13 +6,16 @@
 //  sdddddddddddddddddddddddds   @Last modified by: adebray
 //  sdddddddddddddddddddddddds
 //  :ddddddddddhyyddddddddddd:   @Created: 2017-07-20T00:11:14+02:00
-//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-25T02:11:26+02:00
+//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-26T04:43:14+02:00
 //    +ddddddh`+dh +dddddddo
 //     -sdddddh///sdddddds-
 //       .+ydddddddddhs/.
 //           .-::::-`
 
 #include <gl.h>
+#include <glm/mat4x4.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/constants.hpp>
 
 int main() {
 	adebray::gl _gl;
@@ -20,21 +23,28 @@ int main() {
 	struct adebray::gl::window * w = _gl.createWindow(800, 600, "Default Window");
 	_gl.printVersion();
 
-	// w->setVertices(100, [](size_t x) -> t_vec3f{
-	// 	return (t_vec3f) {
-	// 		static_cast<float>(x / 100.),
-	// 		static_cast<float>(x % 100 / 100.),
-	// 		0.
-	// 	};
-	// });
-	w->setVertices(3, [](size_t x) -> t_vec3f{
-		if (x == 0)
-			return (t_vec3f) {-1.0f, -1.0f, 0.0f};
-		if (x == 1)
-			return (t_vec3f) {1.0f, -1.0f, 0.0f};
-		return (t_vec3f){0.0f,  1.0f, 0.0f};
+	w->setVertices(100, [](size_t i) -> adebray::gl::window::verticesType {
+		float x = static_cast<float>(i / 10 / 10. - 0.5);
+		float y = static_cast<float>(i % 10 / 10. - 0.5);
 
+		return (adebray::gl::window::verticesType){ x, y, 0. };
 	});
+
+	// w->setVertices(100, [](size_t i) -> adebray::gl::window::verticesType {
+	// 	float x = static_cast<float>(i / 10 / 10. - 0.5);
+	// 	float y = static_cast<float>(i % 10 / 10. - 0.5);
+	//
+	// 	return (adebray::gl::window::verticesType){ x, y, 0. };
+	// });
+
+	// w->setVertices(3, [](size_t x) -> t_vec3f{
+	// 	if (x == 0)
+	// 		return (t_vec3f) {-0.9f, -0.9f, 0.0f};
+	// 	if (x == 1)
+	// 		return (t_vec3f) {0.9f, -0.9f, 0.0f};
+	// 	return (t_vec3f){0.0f,  0.9f, 0.0f};
+	//
+	// });
 
 	adebray::gl::shader * _v = new adebray::gl::shader(GL_VERTEX_SHADER, "src/vertex.glsl");
 	adebray::gl::shader * _f = new adebray::gl::shader(GL_FRAGMENT_SHADER, "src/fragment.glsl");
@@ -42,33 +52,29 @@ int main() {
 
 	std::cout << w->to_String() << std::endl;
 
-	_gl.run( [](struct adebray::gl::window * window){
-		while (!glfwWindowShouldClose(window->win))
-		{
-			glClear(GL_COLOR_BUFFER_BIT);
-			// glUseProgram(window->program);
-			// glDrawArrays(GL_TRIANGLE_FAN, 0, window->verticesNbr);
+	_gl.run( [](unsigned int i, struct adebray::gl::window * window) -> void {
+		glm::mat4 Projection = glm::perspective(glm::radians(45.0f), static_cast<float>(800. / 600.), 0.1f, 100.0f);
+		// glm::mat4 Projection = glm::ortho(-10.0f,10.0f,-10.0f,10.0f,0.0f,100.0f);
 
-			glEnableVertexAttribArray(0);
-			glBindBuffer(GL_ARRAY_BUFFER, 1);
-			glVertexAttribPointer(
-				0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-				3,                  // size
-				GL_FLOAT,           // type
-				GL_FALSE,           // normalized?
-				0,                  // stride
-				(void*)0            // array buffer offset
-			);
+		glm::mat4 View = glm::lookAt(
+			glm::vec3(4 * cos(i * 2 * glm::pi<float>() / 360.), 3, 3 * sin(i * 2 * glm::pi<float>() / 360.)), // Camera is at (4,3,3), in World Space
+			glm::vec3(0,0,0), // and looks at the origin
+			glm::vec3(0,1,0)  // Head is up (set to 0,-1,0 to look upside-down)
+		);
+		glm::mat4 Model = glm::mat4(1.0f);
+		glm::mat4 mvp = Projection * View * Model;
+		GLuint MatrixID = glGetUniformLocation(3, "MVP");
+		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &mvp[0][0]);
 
-			// Draw the triangle !
-			glDrawArrays(GL_TRIANGLES, 0, 3); // 3 indices starting at 0 -> 1 triangle
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glUseProgram(window->program);
 
-			glDisableVertexAttribArray(0);
+		glEnableVertexAttribArray(0);
+		glDrawArrays(GL_POINTS, 0, window->verticesNbr);
+		glDisableVertexAttribArray(0);
 
-			glfwSwapBuffers(window->win);
-			glfwPollEvents();
-		}
-		glfwTerminate();
+		glfwSwapBuffers(window->win);
+		glfwPollEvents();
 	});
 
 	return (0);

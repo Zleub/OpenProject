@@ -1,10 +1,9 @@
 #version 410
 
 layout(location = 0) in vec3 vPos;
-// out vec3 color;
+uniform mat4 MVP;
 
 void main()
 {
-	// color = vec3(1., 0., 0.);
-	gl_Position = vec4(vPos, 1.);
+	gl_Position = MVP * vec4(vPos, 1.);
 }

@@ -6,7 +6,7 @@
 //  sdddddddddddddddddddddddds   @Last modified by: adebray
 //  sdddddddddddddddddddddddds
 //  :ddddddddddhyyddddddddddd:   @Created: 2017-07-24T22:43:13+02:00
-//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-25T02:13:54+02:00
+//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-26T04:42:59+02:00
 //    +ddddddh`+dh +dddddddo
 //     -sdddddh///sdddddds-
 //       .+ydddddddddhs/.
@@ -20,8 +20,7 @@ namespace adebray {
 
 	void gl::window::setVertices(GLuint count, glVerticesConfig f) {
 		verticesNbr = count;
-		// GLuint vpos_location = glGetAttribLocation(program, "vPos");
-		// std::cout << "vpos: " << vpos_location << std::endl;
+
 		glGenVertexArrays(1, &VAO);
 		glBindVertexArray(VAO);
 		std::cout << "VAO: " << VAO << std::endl;
@@ -30,15 +29,27 @@ namespace adebray {
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
 		std::cout << "VBO: " << VBO << std::endl;
 
-		t_vec3f * vertices = static_cast<t_vec3f *>(calloc(count, sizeof(t_vec3f)));
+		verticesType * vertices = static_cast<verticesType *>(calloc(count, sizeof(verticesType)));
 		for (size_t i = 0; i < count; i++) {
 			vertices[i] = f(i);
-			printf("%zu: %16f %16f %16f\n", i, vertices[i].x, vertices[i].y, vertices[i].z);
 		}
 
-		glBufferData(GL_ARRAY_BUFFER, sizeof(t_vec3f) * verticesNbr, vertices, GL_STATIC_DRAW);
-		// glEnableVertexAttribArray(vpos_location);
-		// glVertexAttribPointer(vpos_location, sizeof(t_vec3f) / sizeof(float), GL_FLOAT, GL_FALSE, 0, (void*) 0);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(verticesType) * verticesNbr, vertices, GL_STATIC_DRAW);
+		glVertexAttribPointer(0, sizeof(verticesType) / sizeof(float), GL_FLOAT, GL_FALSE, 0, (void*) 0);
+	}
+
+	std::string gl::window::drawing_mode(void) {
+		switch (draw_mode) {
+			case GL_POINTS : return "GL_POINTS" ;
+			case GL_LINES : return "GL_LINES" ;
+			case GL_LINE_STRIP : return "GL_LINE_STRIP" ;
+			case GL_LINE_LOOP : return "GL_LINE_LOOP" ;
+			case GL_TRIANGLES : return "GL_TRIANGLES" ;
+			case GL_TRIANGLE_STRIP : return "GL_TRIANGLE_STRIP" ;
+			case GL_TRIANGLE_FAN : return "GL_TRIANGLE_FAN" ;
+			case GL_QUADS : return "GL_QUADS" ;
+			default : return "NOT A DRAWING MODE" ;
+		}
 	}
 
 	std::string gl::window::to_String(void) {
@@ -51,10 +62,13 @@ namespace adebray {
 		ss << "VBO: " << VBO << std::endl;
 
 		ss << "verticesNbr: " << verticesNbr << std::endl;
+		ss << "verticesWeight: " << sizeof(verticesType) * verticesNbr << std::endl;
 
 		ss << "vertex_shader: " << vertex_shader << std::endl;
 		ss << "fragment_shader: " << fragment_shader << std::endl;
-		ss << "program: " << program;
+		ss << "program: " << program << std::endl;
+
+		ss << drawing_mode();
 
 		return ss.str();
 	}
