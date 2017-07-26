@@ -6,7 +6,7 @@
 //  sdddddddddddddddddddddddds   @Last modified by: adebray
 //  sdddddddddddddddddddddddds
 //  :ddddddddddhyyddddddddddd:   @Created: 2017-07-24T20:56:35+02:00
-//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-26T04:42:37+02:00
+//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-26T21:34:55+02:00
 //    +ddddddh`+dh +dddddddo
 //     -sdddddh///sdddddds-
 //       .+ydddddddddhs/.
@@ -25,6 +25,9 @@
 #include <sstream>
 
 #include <glm/vec3.hpp>
+#include <glm/mat4x4.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/constants.hpp>
 
 namespace adebray {
 	class gl {
@@ -39,6 +42,15 @@ namespace adebray {
 			GLuint type;
 			std::string path;
 			std::string text;
+		};
+
+		struct camera {
+			camera(void);
+			glm::mat4 mvp(void);
+
+			glm::mat4 projection;
+			glm::mat4 view;
+			glm::mat4 model;
 		};
 
 		struct window {
@@ -64,12 +76,14 @@ namespace adebray {
 			GLuint program;
 
 			int draw_mode;
+
+			struct camera camera;
 		};
 
 		static std::string version(void);
 		static void printVersion(void);
 
-		typedef void(*glRun)(unsigned int i , struct window * window);
+		typedef void(*glRun)(unsigned int i , gl * _gl);
 
 		gl(void);
 		virtual ~gl(void);
@@ -78,6 +92,7 @@ namespace adebray {
 		GLuint createProgram(void);
 		GLuint createProgram(shader *vertex, shader *fragment);
 		void run(glRun);
+		struct window * getCurrentWindow(void);
 
 	private:
 		std::vector<struct window *> windows;

@@ -6,7 +6,7 @@
 //  sdddddddddddddddddddddddds   @Last modified by: adebray
 //  sdddddddddddddddddddddddds
 //  :ddddddddddhyyddddddddddd:   @Created: 2017-07-24T20:53:32+02:00
-//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-26T03:31:36+02:00
+//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-26T21:33:02+02:00
 //    +ddddddh`+dh +dddddddo
 //     -sdddddh///sdddddds-
 //       .+ydddddddddhs/.
@@ -31,8 +31,8 @@ namespace adebray {
 	}
 
 	/**
-	* return a string with OpenGL, GLSL and GLFW versions
-	*/
+	 * Return a string with OpenGL, GLSL and GLFW versions.
+	 */
 	std::string gl::version(void) {
 		const unsigned char *renderer;
 		const unsigned char *version;
@@ -55,6 +55,9 @@ namespace adebray {
 		return s.str();
 	}
 
+	/**
+	 * Print the current OpenGL version.
+	 */
 	void gl::printVersion(void) {
 		std::cout << gl::version() << std::endl;
 	}
@@ -69,12 +72,21 @@ namespace adebray {
 		return _w;
 	}
 
+	/**
+	 * Create a shader program.
+	 *
+	 * It's up to you to set the `vertex_shader` and the `fragment_shader`
+	 * of the current window.
+	 */
 	GLuint gl::createProgram(void) {
 		current->program = glCreateProgram();
 		glLinkProgram(current->program);
 		return current->program;
 	}
 
+	/**
+	 * Create a shader program from a vertex shader and a fragment shader.
+	 */
 	GLuint gl::createProgram(shader *vertex, shader *fragment) {
 		current->program = glCreateProgram();
 		current->vertex_shader = vertex->id;
@@ -85,13 +97,19 @@ namespace adebray {
 		return current->program;
 	}
 
+	/**
+	 * A 1rst order function which define the running loop of a GL application.
+	 */
 	void gl::run(glRun run) {
 		unsigned int i = 0;
 		while (!glfwWindowShouldClose(current->win)) {
-			run( i, current );
+			run( i, this );
 			i += 1;
 		}
 		glfwTerminate();
 	}
 
+	struct gl::window * gl::getCurrentWindow(void) {
+		return current;
+	}
 }
