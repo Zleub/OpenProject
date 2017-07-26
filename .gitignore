@@ -19,6 +19,7 @@ CTestTestfile.cmake
 # Project
 
 src/glfw
+src/glm
 helloworld
 
 # C/C++
