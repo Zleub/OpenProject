@@ -10,9 +10,24 @@ set (CMAKE_CXX_STANDARD 11)
 set (GCC_COVERAGE_COMPILE_FLAGS "-Wall -Werror -Wextra")
 set (CMAKE_CXX_FLAGS  "${CMAKE_CXX_FLAGS} ${GCC_COVERAGE_COMPILE_FLAGS}")
 
-execute_process(
-	COMMAND ./configure
-)
+function(m4 out_var)
+	set(result)
+	foreach(in_f ${ARGN})
+		string(REGEX MATCH "^(.*)\\.[^.]*$" dummy ${in_f})
+		set(striped ${CMAKE_MATCH_1})
+		set(in "${CMAKE_CURRENT_BINARY_DIR}/${in_f}")
+		set(out "${CMAKE_CURRENT_BINARY_DIR}/${striped}")
+		execute_process(
+			OUTPUT_FILE ${out}
+			INPUT_FILE ${in}
+			COMMAND m4
+		)
+		list(APPEND result ${out})
+	endforeach()
+	set(${out_var} "${result}" PARENT_SCOPE)
+endfunction()
+
+execute_process( COMMAND ./configure )
 
 find_package(OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIR})
@@ -24,10 +39,12 @@ add_subdirectory (deps/glfw ./src/glfw)
 add_subdirectory (deps/glm ./src/glm)
 
 add_subdirectory (src/gl)
+add_subdirectory (src/colors)
 
 add_executable (helloworld src/main.cpp)
 target_link_libraries (helloworld LINK_PUBLIC
   ${OPENGL_gl_LIBRARY}
   glfw
   gl
+  colors
 )
