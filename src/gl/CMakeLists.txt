@@ -5,4 +5,5 @@ target_include_directories (gl PUBLIC
   inc
   ../../deps/glfw/include
   ../../deps/glm
+  ../colors
 )

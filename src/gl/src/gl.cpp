@@ -6,7 +6,7 @@
 //  sdddddddddddddddddddddddds   @Last modified by: adebray
 //  sdddddddddddddddddddddddds
 //  :ddddddddddhyyddddddddddd:   @Created: 2017-07-24T20:53:32+02:00
-//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-26T21:33:02+02:00
+//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-27T18:35:49+02:00
 //    +ddddddh`+dh +dddddddo
 //     -sdddddh///sdddddds-
 //       .+ydddddddddhs/.
@@ -77,6 +77,16 @@ namespace adebray {
 	 *
 	 * It's up to you to set the `vertex_shader` and the `fragment_shader`
 	 * of the current window.
+	 *
+	 * ```
+	 * adebray::gl _gl;
+	 * struct adebray::gl::window * w = _gl.getCurrentWindow();
+	 *
+	 * w->vertex_shader = vertex->id;
+	 * w->fragment_shader = fragment->id;
+	 * glAttachShader(w->program, vertex->id);
+	 * glAttachShader(w->program, fragment->id);
+	 * ```
 	 */
 	GLuint gl::createProgram(void) {
 		current->program = glCreateProgram();

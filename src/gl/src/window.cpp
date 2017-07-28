@@ -6,7 +6,7 @@
 //  sdddddddddddddddddddddddds   @Last modified by: adebray
 //  sdddddddddddddddddddddddds
 //  :ddddddddddhyyddddddddddd:   @Created: 2017-07-24T22:43:13+02:00
-//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-26T04:42:59+02:00
+//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-27T18:33:45+02:00
 //    +ddddddh`+dh +dddddddo
 //     -sdddddh///sdddddds-
 //       .+ydddddddddhs/.
@@ -23,11 +23,9 @@ namespace adebray {
 
 		glGenVertexArrays(1, &VAO);
 		glBindVertexArray(VAO);
-		std::cout << "VAO: " << VAO << std::endl;
 
 		glGenBuffers(1, &VBO);
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
-		std::cout << "VBO: " << VBO << std::endl;
 
 		verticesType * vertices = static_cast<verticesType *>(calloc(count, sizeof(verticesType)));
 		for (size_t i = 0; i < count; i++) {

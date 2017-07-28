@@ -6,7 +6,7 @@
 //  sdddddddddddddddddddddddds   @Last modified by: adebray
 //  sdddddddddddddddddddddddds
 //  :ddddddddddhyyddddddddddd:   @Created: 2017-07-24T20:56:35+02:00
-//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-26T21:34:55+02:00
+//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-27T18:49:44+02:00
 //    +ddddddh`+dh +dddddddo
 //     -sdddddh///sdddddds-
 //       .+ydddddddddhs/.
@@ -33,6 +33,8 @@ namespace adebray {
 	class gl {
 	public:
 		struct shader {
+			static std::string shaderTypeToString(GLuint type);
+
 			shader();
 			shader(GLuint type, std::string path);
 			GLuint load(void);

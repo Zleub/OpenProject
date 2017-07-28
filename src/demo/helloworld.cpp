@@ -6,7 +6,7 @@
 //  sdddddddddddddddddddddddds   @Last modified by: adebray
 //  sdddddddddddddddddddddddds
 //  :ddddddddddhyyddddddddddd:   @Created: 2017-07-20T00:11:14+02:00
-//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-26T21:36:12+02:00
+//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-28T02:10:31+02:00
 //    +ddddddh`+dh +dddddddo
 //     -sdddddh///sdddddds-
 //       .+ydddddddddhs/.
@@ -17,35 +17,36 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/constants.hpp>
 
-int main() {
+int main(void) {
 	adebray::gl _gl;
 
 	struct adebray::gl::window * w = _gl.createWindow(800, 600, "Default Window");
 	_gl.printVersion();
 
 	w->setVertices(100, [](size_t i) -> adebray::gl::window::verticesType {
-		float x = static_cast<float>(i / 10 / 10. - 0.5);
-		float z = static_cast<float>(i % 10 / 10. - 0.5);
-		float y = (x + x) * (z + z);
+		float x = static_cast<float>((i / 10) / 10.) - 0.45;
+		float z = static_cast<float>((i % 10) / 10.) - 0.45;
+		// float y = x * x + z * z;
+		float y = 0;
 
 		return (adebray::gl::window::verticesType){ x, y, z };
 	});
 
-	// w->setVertices(100, [](size_t i) -> adebray::gl::window::verticesType {
-	// 	float x = static_cast<float>(i / 10 / 10. - 0.5);
-	// 	float y = static_cast<float>(i % 10 / 10. - 0.5);
-	//
-	// 	return (adebray::gl::window::verticesType){ x, y, 0. };
-	// });
+	w->setVertices(100, [](size_t i) -> adebray::gl::window::verticesType {
+		float x = static_cast<float>(i / 10 / 10. - 0.5);
+		float y = static_cast<float>(i % 10 / 10. - 0.5);
 
-	// w->setVertices(3, [](size_t x) -> t_vec3f{
-	// 	if (x == 0)
-	// 		return (t_vec3f) {-0.9f, -0.9f, 0.0f};
-	// 	if (x == 1)
-	// 		return (t_vec3f) {0.9f, -0.9f, 0.0f};
-	// 	return (t_vec3f){0.0f,  0.9f, 0.0f};
-	//
-	// });
+		return (adebray::gl::window::verticesType){ x, y, 0. };
+	});
+
+	w->setVertices(3, [](size_t x) -> adebray::gl::window::verticesType {
+		if (x == 0)
+			return (adebray::gl::window::verticesType) {-0.9f, -0.9f, 0.0f};
+		if (x == 1)
+			return (adebray::gl::window::verticesType) {0.9f, -0.9f, 0.0f};
+		return (adebray::gl::window::verticesType){0.0f,  0.9f, 0.0f};
+
+	});
 
 	adebray::gl::shader * _v = new adebray::gl::shader(GL_VERTEX_SHADER, "src/vertex.glsl");
 	adebray::gl::shader * _f = new adebray::gl::shader(GL_FRAGMENT_SHADER, "src/fragment.glsl");
@@ -54,11 +55,12 @@ int main() {
 	std::cout << w->to_String() << std::endl;
 
 	_gl.run( [](unsigned int i, adebray::gl * _gl) -> void {
+	(void)i;
 		_gl->getCurrentWindow()->camera.view = glm::lookAt(
 			glm::vec3(
-				3 * cos(i * 2 * glm::pi<float>() / 360.),
-				3,
-				3 * sin(i * 2 * glm::pi<float>() / 360.)
+				1 * cos(i * 2 * glm::pi<float>() / 360.),
+				5,
+				1 * sin(i * 2 * glm::pi<float>() / 360.)
 			), /* position */
 			glm::vec3(0,0,0), /* direction */
 			glm::vec3(0,1,0) /* head */
@@ -77,6 +79,5 @@ int main() {
 		glfwSwapBuffers(_gl->getCurrentWindow()->win);
 		glfwPollEvents();
 	});
-
 	return (0);
 }
