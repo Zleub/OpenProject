@@ -22,6 +22,7 @@ git clone --recursive https://github.com/Zleub/OpenProject.git
 
 - brew (OSX package manager)
 - [glfw](https://github.com/glfw/glfw) (universal OpenGL wrapper)
+- [glm](https://github.com/g-truc/glm) (universal mathematics wrapper)
 
 ## Readings
 
