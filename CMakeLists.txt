@@ -41,10 +41,11 @@ add_subdirectory (deps/glm ./src/glm)
 add_subdirectory (src/gl)
 add_subdirectory (src/colors)
 
-add_executable (helloworld src/main.cpp)
+add_executable (helloworld src/demo/helloworld.cpp)
 target_link_libraries (helloworld LINK_PUBLIC
-  ${OPENGL_gl_LIBRARY}
-  glfw
-  gl
-  colors
+	${OPENGL_gl_LIBRARY} glfw glm
+	gl colors
 )
+
+add_executable (opt src/demo/opt.cpp)
+target_link_libraries(opt glm)
