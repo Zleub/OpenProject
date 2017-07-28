@@ -6,7 +6,7 @@
 //  sdddddddddddddddddddddddds   @Last modified by: adebray
 //  sdddddddddddddddddddddddds
 //  :ddddddddddhyyddddddddddd:   @Created: 2017-07-24T22:43:13+02:00
-//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-27T18:33:45+02:00
+//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-28T23:37:23+02:00
 //    +ddddddh`+dh +dddddddo
 //     -sdddddh///sdddddds-
 //       .+ydddddddddhs/.
@@ -16,16 +16,16 @@
 
 namespace adebray {
 	gl::window::window(int w, int h, GLFWwindow * _w) :
-	width(w), height(h), win(_w) {}
-
-	void gl::window::setVertices(GLuint count, glVerticesConfig f) {
-		verticesNbr = count;
-
+	width(w), height(h), win(_w), draw_mode(GL_TRIANGLES) {
 		glGenVertexArrays(1, &VAO);
 		glBindVertexArray(VAO);
 
 		glGenBuffers(1, &VBO);
 		glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	}
+
+	void gl::window::setVertices(GLuint count, verticesType(*f)(size_t)) {
+		verticesNbr = count;
 
 		verticesType * vertices = static_cast<verticesType *>(calloc(count, sizeof(verticesType)));
 		for (size_t i = 0; i < count; i++) {
@@ -35,6 +35,12 @@ namespace adebray {
 		glBufferData(GL_ARRAY_BUFFER, sizeof(verticesType) * verticesNbr, vertices, GL_STATIC_DRAW);
 		glVertexAttribPointer(0, sizeof(verticesType) / sizeof(float), GL_FLOAT, GL_FALSE, 0, (void*) 0);
 	}
+
+	// void gl::window::setVertices(GLuint width, GLuint height, verticesType(*f)(size_t, size_t)) {
+	// 	(void)width;
+	// 	(void)height;
+	// 	(void)f;
+	// }
 
 	std::string gl::window::drawing_mode(void) {
 		switch (draw_mode) {

@@ -6,7 +6,7 @@
 //  sdddddddddddddddddddddddds   @Last modified by: adebray
 //  sdddddddddddddddddddddddds
 //  :ddddddddddhyyddddddddddd:   @Created: 2017-07-24T20:53:32+02:00
-//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-27T18:35:49+02:00
+//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-28T23:31:56+02:00
 //    +ddddddh`+dh +dddddddo
 //     -sdddddh///sdddddds-
 //       .+ydddddddddhs/.
@@ -64,9 +64,9 @@ namespace adebray {
 
 	struct gl::window * gl::createWindow(int w, int h, std::string title) {
 		GLFWwindow * window = glfwCreateWindow(w, h, title.c_str(), NULL, NULL);
+		glfwMakeContextCurrent(window);
 		struct window * _w = new struct window(w, h, window);
 		current = _w;
-		glfwMakeContextCurrent(window);
 
 		windows.push_back(_w);
 		return _w;
@@ -114,6 +114,8 @@ namespace adebray {
 		unsigned int i = 0;
 		while (!glfwWindowShouldClose(current->win)) {
 			run( i, this );
+			glfwSwapBuffers(current->win);
+			glfwPollEvents();
 			i += 1;
 		}
 		glfwTerminate();

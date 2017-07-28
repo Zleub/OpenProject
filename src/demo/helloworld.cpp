@@ -6,7 +6,7 @@
 //  sdddddddddddddddddddddddds   @Last modified by: adebray
 //  sdddddddddddddddddddddddds
 //  :ddddddddddhyyddddddddddd:   @Created: 2017-07-20T00:11:14+02:00
-//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-28T02:10:31+02:00
+//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-28T23:32:21+02:00
 //    +ddddddh`+dh +dddddddo
 //     -sdddddh///sdddddds-
 //       .+ydddddddddhs/.
@@ -22,22 +22,6 @@ int main(void) {
 
 	struct adebray::gl::window * w = _gl.createWindow(800, 600, "Default Window");
 	_gl.printVersion();
-
-	w->setVertices(100, [](size_t i) -> adebray::gl::window::verticesType {
-		float x = static_cast<float>((i / 10) / 10.) - 0.45;
-		float z = static_cast<float>((i % 10) / 10.) - 0.45;
-		// float y = x * x + z * z;
-		float y = 0;
-
-		return (adebray::gl::window::verticesType){ x, y, z };
-	});
-
-	w->setVertices(100, [](size_t i) -> adebray::gl::window::verticesType {
-		float x = static_cast<float>(i / 10 / 10. - 0.5);
-		float y = static_cast<float>(i % 10 / 10. - 0.5);
-
-		return (adebray::gl::window::verticesType){ x, y, 0. };
-	});
 
 	w->setVertices(3, [](size_t x) -> adebray::gl::window::verticesType {
 		if (x == 0)
@@ -55,29 +39,29 @@ int main(void) {
 	std::cout << w->to_String() << std::endl;
 
 	_gl.run( [](unsigned int i, adebray::gl * _gl) -> void {
-	(void)i;
-		_gl->getCurrentWindow()->camera.view = glm::lookAt(
+		(void)i;
+
+		adebray::gl::window * _w = _gl->getCurrentWindow();
+		_w->camera.view = glm::lookAt(
 			glm::vec3(
-				1 * cos(i * 2 * glm::pi<float>() / 360.),
-				5,
-				1 * sin(i * 2 * glm::pi<float>() / 360.)
+				5 * cos(i * 2 * glm::pi<float>() / 360.),
+				0,
+				5 * sin(i * 2 * glm::pi<float>() / 360.)
 			), /* position */
 			glm::vec3(0,0,0), /* direction */
 			glm::vec3(0,1,0) /* head */
 		);
 
 		GLuint MatrixID = glGetUniformLocation(3, "MVP");
-		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &_gl->getCurrentWindow()->camera.mvp()[0][0]);
+		glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &_w->camera.mvp()[0][0]);
 
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		glUseProgram(_gl->getCurrentWindow()->program);
+		glUseProgram(_w->program);
 
 		glEnableVertexAttribArray(0);
-		glDrawArrays(GL_POINTS, 0, _gl->getCurrentWindow()->verticesNbr);
+		glDrawArrays(_w->draw_mode, 0, _w->verticesNbr);
 		glDisableVertexAttribArray(0);
 
-		glfwSwapBuffers(_gl->getCurrentWindow()->win);
-		glfwPollEvents();
 	});
 	return (0);
 }

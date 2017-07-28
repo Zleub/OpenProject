@@ -6,7 +6,7 @@
 //  sdddddddddddddddddddddddds   @Last modified by: adebray
 //  sdddddddddddddddddddddddds
 //  :ddddddddddhyyddddddddddd:   @Created: 2017-07-24T20:56:35+02:00
-//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-27T18:49:44+02:00
+//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-28T23:37:33+02:00
 //    +ddddddh`+dh +dddddddo
 //     -sdddddh///sdddddds-
 //       .+ydddddddddhs/.
@@ -57,10 +57,10 @@ namespace adebray {
 
 		struct window {
 			typedef glm::tvec3<float> verticesType;
-			typedef verticesType(*glVerticesConfig)(size_t);
 
 			window(int, int, GLFWwindow *);
-			void setVertices(GLuint, glVerticesConfig);
+			void setVertices(GLuint, verticesType(*glVerticesConfig)(size_t));
+			// void setVertices(GLuint, GLuint, verticesType(*glVerticesConfig)(size_t, size_t));
 			std::string drawing_mode(void);
 			std::string to_String(void);
 
