@@ -41,11 +41,13 @@ add_subdirectory (deps/glm ./src/glm)
 add_subdirectory (src/gl)
 add_subdirectory (src/colors)
 
-add_executable (helloworld src/demo/helloworld.cpp)
-target_link_libraries (helloworld LINK_PUBLIC
-	${OPENGL_gl_LIBRARY} glfw glm
-	gl colors
-)
-
-add_executable (opt src/demo/opt.cpp)
-target_link_libraries(opt glm)
+FILE(GLOB files src/demo/*.cpp)
+foreach(file ${files})
+	string(REGEX MATCH ".*/(.*)\\.[^.]*$" dummy ${file})
+	set(striped ${CMAKE_MATCH_1})
+	add_executable (${striped} ${file})
+	target_link_libraries (${striped} LINK_PUBLIC
+		${OPENGL_gl_LIBRARY} glfw glm
+		gl colors
+	)
+endforeach()
