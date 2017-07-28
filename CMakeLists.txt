@@ -40,6 +40,7 @@ add_subdirectory (deps/glm ./src/glm)
 
 add_subdirectory (src/gl)
 add_subdirectory (src/colors)
+add_subdirectory (src/loaders)
 
 FILE(GLOB files src/demo/*.cpp)
 foreach(file ${files})
@@ -49,5 +50,6 @@ foreach(file ${files})
 	target_link_libraries (${striped} LINK_PUBLIC
 		${OPENGL_gl_LIBRARY} glfw glm
 		gl colors
+		loaders
 	)
 endforeach()
