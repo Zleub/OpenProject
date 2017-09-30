@@ -6,7 +6,7 @@
 //  sdddddddddddddddddddddddds   @Last modified by: adebray
 //  sdddddddddddddddddddddddds
 //  :ddddddddddhyyddddddddddd:   @Created: 2017-07-29T00:13:27+02:00
-//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-29T01:22:23+02:00
+//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-29T18:29:32+02:00
 //    +ddddddh`+dh +dddddddo
 //     -sdddddh///sdddddds-
 //       .+ydddddddddhs/.
@@ -25,8 +25,11 @@ mod1::mod1(std::string filename) {
 		exit(EXIT_FAILURE);
 	}
 	else {
-		// std::cout << text << std::endl;
-		std::regex txt_regex("\(([0-9]+),([0-9]+),([0-9]+)\)");
+		std::cout << text << std::endl;
+		std::regex r("\\(([0-9]+),([0-9]+),([0-9]+)\\)");
+		std::smatch match;
+		std::regex_match(text, match, r);
+
 	}
 }
 

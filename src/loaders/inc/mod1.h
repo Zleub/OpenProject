@@ -6,7 +6,7 @@
 //  sdddddddddddddddddddddddds   @Last modified by: adebray
 //  sdddddddddddddddddddddddds
 //  :ddddddddddhyyddddddddddd:   @Created: 2017-07-29T00:24:16+02:00
-//   odddddddd/`:-`sdddddddds    @Modified: 2017-07-29T01:17:38+02:00
+//   odddddddd/`:-`sdddddddds    @Modified: 2017-08-09T01:14:05+02:00
 //    +ddddddh`+dh +dddddddo
 //     -sdddddh///sdddddds-
 //       .+ydddddddddhs/.
@@ -14,6 +14,7 @@
 
 #include <Iloader.h>
 
+#include <regex>
 #include <iostream>
 #include <fstream>
 
